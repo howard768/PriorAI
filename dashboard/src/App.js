@@ -8,6 +8,7 @@ import PriorAuthForm from './components/PriorAuthForm';
 import DemoNotice from './components/DemoNotice';
 import { PriorAILogo } from './components/logos';
 import { AlertCircle, FileText, BarChart3 } from 'lucide-react';
+import config from './config/environment';
 
 // Dashboard component (existing functionality)
 function Dashboard() {
@@ -189,22 +190,24 @@ function Navigation() {
             : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
         }`}
       >
-        <BarChart3 size={16} className="sm:w-[18px] sm:h-[18px]" />
-        <span className="hidden sm:inline">Analytics Dashboard</span>
-        <span className="sm:hidden">Analytics</span>
-      </Link>
-      <Link
-        to="/prior-auth"
-        className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 rounded-lg transition-colors text-xs sm:text-sm ${
-          location.pathname === '/prior-auth' 
-            ? 'bg-indigo-600 text-white' 
-            : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-        }`}
-      >
         <FileText size={16} className="sm:w-[18px] sm:h-[18px]" />
         <span className="hidden sm:inline">Prior Authorization</span>
         <span className="sm:hidden">Prior Auth</span>
       </Link>
+      {!config.USE_MOCK_DATA && (
+        <Link
+          to="/analytics"
+          className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 rounded-lg transition-colors text-xs sm:text-sm ${
+            location.pathname === '/analytics' 
+              ? 'bg-indigo-600 text-white' 
+              : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+          }`}
+        >
+          <BarChart3 size={16} className="sm:w-[18px] sm:h-[18px]" />
+          <span className="hidden sm:inline">Analytics Dashboard</span>
+          <span className="sm:hidden">Analytics</span>
+        </Link>
+      )}
     </nav>
   );
 }
@@ -236,8 +239,8 @@ function App() {
         {/* Main Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/prior-auth" element={<PriorAuthForm />} />
+            <Route path="/" element={<PriorAuthForm />} />
+            {!config.USE_MOCK_DATA && <Route path="/analytics" element={<Dashboard />} />}
           </Routes>
         </main>
 
