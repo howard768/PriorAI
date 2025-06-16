@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLP-1 RCM Intelligence Platform - AI Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-section h4 {
+            margin-top: 0;
+            color: #495057;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .results.active {
+            display: block;
+        }
+        
+        .result-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .probability-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+        
+        .probability-score.medium {
+            color: #ffc107;
+        }
+        
+        .probability-score.low {
+            color: #dc3545;
+        }
+        
+        .documentation-preview {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .suggestions {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .suggestions li {
+            background: #e3f2fd;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid, .form-grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🩺 GLP-1 RCM Intelligence Platform</h1>
+            <p>AI-Powered Prior Authorization Analysis</p>
+        </div>
+        
+        <div class="demo-card">
+            <div class="card-header">
+                <h3>🤖 Real-Time AI Prior Authorization Analysis</h3>
+                <p>Enter actual patient data for genuine AI-powered medical necessity analysis</p>
+            </div>
+            
+            <div class="card-body">
+                <form id="priorAuthForm">
+                    <!-- Patient Demographics -->
+                    <div class="form-section">
+                        <h4>👤 Patient Demographics</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="patientName">Patient Name</label>
+                                <input type="text" id="patientName" placeholder="Patient Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="patientAge">Age</label>
+                                <input type="number" id="patientAge" placeholder="Age">
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="patientGender">Gender</label>
+                                <select id="patientGender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="patientBMI">BMI</label>
+                                <input type="number" step="0.1" id="patientBMI" placeholder="BMI">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Information -->
+                    <div class="form-section">
+                        <h4>🩺 Clinical Information</h4>
+                        <div class="form-group">
+                            <label for="primaryDiagnosis">Primary Diagnosis</label>
+                            <input type="text" id="primaryDiagnosis" placeholder="e.g., Type 2 Diabetes Mellitus, Obesity, etc.">
+                        </div>
+                        <div class="form-grid-3">
+                            <div class="form-group">
+                                <label for="hba1c">HbA1c (%)</label>
+                                <input type="number" step="0.1" id="hba1c" placeholder="HbA1c">
+                            </div>
+                            <div class="form-group">
+                                <label for="fastingGlucose">Fasting Glucose (mg/dL)</label>
+                                <input type="number" id="fastingGlucose" placeholder="Fasting Glucose">
+                            </div>
+                            <div class="form-group">
+                                <label for="weight">Current Weight (lbs)</label>
+                                <input type="number" id="weight" placeholder="Weight">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comorbidities">Comorbidities</label>
+                            <textarea id="comorbidities" rows="3" placeholder="List all relevant comorbidities, cardiovascular conditions, etc."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Treatment History -->
+                    <div class="form-section">
+                        <h4>💊 Treatment History</h4>
+                        <div class="form-group">
+                            <label for="currentMedications">Current Medications</label>
+                            <textarea id="currentMedications" rows="3" placeholder="List all current medications with doses and duration"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="previousTreatments">Previous Failed Treatments</label>
+                            <textarea id="previousTreatments" rows="3" placeholder="Detail previous treatments tried, duration, and reasons for discontinuation"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="requestedMedication">Requested Medication *</label>
+                            <input type="text" id="requestedMedication" placeholder="Enter the specific medication requiring authorization" required>
+                        </div>
+                    </div>
+
+                    <!-- Insurance Information -->
+                    <div class="form-section">
+                        <h4>🏥 Insurance Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="payer">Insurance Payer</label>
+                                <input type="text" id="payer" placeholder="Enter any insurance payer name">
+                            </div>
+                            <div class="form-group">
+                                <label for="planType">Plan Type</label>
+                                <select id="planType">
+                                    <option value="">Select Plan Type</option>
+                                    <option value="Commercial">Commercial</option>
+                                    <option value="Medicare">Medicare</option>
+                                    <option value="Medicaid">Medicaid</option>
+                                    <option value="Medicare Advantage">Medicare Advantage</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Notes -->
+                    <div class="form-section">
+                        <h4>📋 Clinical Context</h4>
+                        <div class="form-group">
+                            <label for="clinicalNotes">Clinical Notes & Justification</label>
+                            <textarea id="clinicalNotes" rows="5" placeholder="Provide detailed clinical context, patient history, social factors, lifestyle interventions tried, and medical justification for the requested treatment..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn">🚀 Generate AI Analysis</button>
+                </form>
+                
+                <div id="results" class="results">
+                    <div class="result-card">
+                        <h4>📊 AI Approval Probability Analysis</h4>
+                        <div id="predictionResults"></div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h4>📝 AI-Generated Medical Necessity Letter</h4>
+                        <div id="documentationResults"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:3001';
+        
+        document.getElementById('priorAuthForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const results = document.getElementById('results');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Analyzing with AI...';
+            
+            try {
+                // Validate required medication field
+                const requestedMedication = document.getElementById('requestedMedication').value.trim();
+                if (!requestedMedication) {
+                    alert('Please specify the medication you are requesting authorization for. This demo will analyze any medication - not just GLP-1 drugs.');
+                    return;
+                }
+                
+                const formData = {
+                    patientData: {
+                        name: document.getElementById('patientName').value || 'Patient',
+                        age: parseInt(document.getElementById('patientAge').value) || 0,
+                        gender: document.getElementById('patientGender').value,
+                        bmi: parseFloat(document.getElementById('patientBMI').value) || 0,
+                        weight: parseFloat(document.getElementById('weight').value) || 0
+                    },
+                    clinicalContext: {
+                        primaryDiagnosis: document.getElementById('primaryDiagnosis').value || 'Type 2 Diabetes Mellitus',
+                        hba1c: parseFloat(document.getElementById('hba1c').value) || 0,
+                        fastingGlucose: parseFloat(document.getElementById('fastingGlucose').value) || 0,
+                        comorbidities: document.getElementById('comorbidities').value.split(',').map(s => s.trim()).filter(s => s),
+                        currentMedications: document.getElementById('currentMedications').value,
+                        previousTreatments: document.getElementById('previousTreatments').value.split(',').map(s => s.trim()).filter(s => s),
+                        requestedMedication: requestedMedication,
+                        notes: document.getElementById('clinicalNotes').value
+                    },
+                    payerRequirements: {
+                        payer: document.getElementById('payer').value || 'Insurance Payer',
+                        planType: document.getElementById('planType').value
+                    }
+                };
+                
+                const response = await fetch(`${API_BASE}/analyze-prior-auth`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    let scoreClass = result.prediction.probability >= 70 ? 'high' : 
+                                   result.prediction.probability >= 50 ? 'medium' : 'low';
+                    
+                    document.getElementById('predictionResults').innerHTML = `
+                        <div class="metric">
+                            <span>Approval Probability:</span>
+                            <span class="probability-score ${scoreClass}">${result.prediction.probability}%</span>
+                        </div>
+                        <div class="metric">
+                            <span>Risk Level:</span>
+                            <strong>${result.prediction.riskLevel}</strong>
+                        </div>
+                        <div class="metric">
+                            <span>AI Confidence:</span>
+                            <strong>${result.prediction.confidence}%</strong>
+                        </div>
+                        ${result.prediction.suggestions.length > 0 ? `
+                        <div style="margin-top: 15px;">
+                            <strong>💡 AI Strategic Recommendations:</strong>
+                            <ul class="suggestions">
+                                ${result.prediction.suggestions.map(s => `<li>${s}</li>`).join('')}
+                            </ul>
+                        </div>` : ''}
+                    `;
+                    
+                    document.getElementById('documentationResults').innerHTML = `
+                        <div class="metric">
+                            <span>Payer:</span>
+                            <strong>${result.documentation.payer}</strong>
+                        </div>
+                        <div class="metric">
+                            <span>Letter Length:</span>
+                            <strong>${result.documentation.wordCount} words</strong>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <strong>📄 AI-Generated Medical Necessity Letter:</strong>
+                            <div class="documentation-preview">${result.documentation.documentation}</div>
+                        </div>
+                    `;
+                    
+                    results.classList.add('active');
+                } else {
+                    alert('Analysis failed: ' + (result.error || 'Unknown error'));
+                }
+                
+            } catch (error) {
+                alert('Error: Make sure the AI service is running on port 3001');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🚀 Generate AI Analysis';
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLP-1 RCM Intelligence Platform - Prior Authorization</title>
+    <link rel="stylesheet" href="styles/globals.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css">
+</head>
+<body>
+    <!-- Professional Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="header-logo">
+                    <i class="lucide-heart-pulse" style="font-size: 24px; color: var(--primary-blue);"></i>
+                    <div>
+                        <h1 class="header-title">GLP-1 RCM Intelligence Platform</h1>
+                        <p class="header-subtitle">AI-Powered Prior Authorization</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="notification-icon">
+                    <i class="lucide-bell" style="font-size: 20px; color: var(--text-secondary);"></i>
+                    <span class="notification-badge"></span>
+                </div>
+                <div class="header-user">
+                    <div class="avatar">DC</div>
+                    <div>
+                        <div style="font-weight: 500;">Dr. Carter</div>
+                        <div style="font-size: var(--text-xs); color: var(--text-secondary);">Endocrinology</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <form id="priorAuthForm">
+            <div class="two-column-grid">
+                <!-- Left Column: Form Sections -->
+                <div class="left-column">
+                    <!-- Patient Demographics Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="lucide-user" style="font-size: 18px; margin-right: 8px;"></i>Patient Demographics</h2>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                                <div class="form-group">
+                                    <label class="form-label" for="patientName">Patient Name</label>
+                                    <input type="text" id="patientName" class="form-input" placeholder="Enter patient name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="patientAge">Age</label>
+                                    <input type="number" id="patientAge" class="form-input" placeholder="Age in years">
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                                <div class="form-group">
+                                    <label class="form-label" for="patientGender">Gender</label>
+                                    <select id="patientGender" class="form-select">
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="patientBMI">BMI</label>
+                                    <div class="input-group">
+                                        <input type="number" step="0.1" id="patientBMI" class="form-input input-with-unit" placeholder="Enter BMI">
+                                        <span class="input-unit">kg/m²</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Information Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="lucide-stethoscope" style="font-size: 18px; margin-right: 8px;"></i>Clinical Information</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label" for="primaryDiagnosis">Primary Diagnosis</label>
+                                <input type="text" id="primaryDiagnosis" class="form-input" placeholder="e.g., Type 2 Diabetes Mellitus, Obesity">
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-4);">
+                                <div class="form-group">
+                                    <label class="form-label" for="hba1c">HbA1c</label>
+                                    <div class="input-group">
+                                        <input type="number" step="0.1" id="hba1c" class="form-input input-with-unit" placeholder="HbA1c level">
+                                        <span class="input-unit">%</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="fastingGlucose">Fasting Glucose</label>
+                                    <div class="input-group">
+                                        <input type="number" id="fastingGlucose" class="form-input input-with-unit" placeholder="Glucose level">
+                                        <span class="input-unit">mg/dL</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="weight">Current Weight</label>
+                                    <div class="input-group">
+                                        <input type="number" id="weight" class="form-input input-with-unit" placeholder="Weight">
+                                        <span class="input-unit">lbs</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="comorbidities">Comorbidities</label>
+                                <textarea id="comorbidities" class="form-textarea" rows="3" placeholder="List relevant comorbidities, cardiovascular conditions, etc."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Treatment History Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="lucide-pill" style="font-size: 18px; margin-right: 8px;"></i>Treatment History</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label" for="currentMedications">Current Medications</label>
+                                <textarea id="currentMedications" class="form-textarea" rows="3" placeholder="List all current medications with doses and duration"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="previousTreatments">Previous Failed Treatments</label>
+                                <textarea id="previousTreatments" class="form-textarea" rows="3" placeholder="Detail previous treatments tried, duration, and reasons for discontinuation"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="requestedMedication">
+                                    Requested Medication 
+                                    <span style="color: var(--error-red);">*</span>
+                                </label>
+                                <input type="text" id="requestedMedication" class="form-input" placeholder="Enter the specific medication requiring authorization" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Insurance Information Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="lucide-shield" style="font-size: 18px; margin-right: 8px;"></i>Insurance Information</h2>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                                <div class="form-group">
+                                    <label class="form-label" for="payer">Insurance Payer</label>
+                                    <input type="text" id="payer" class="form-input" placeholder="Enter insurance payer name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="planType">Plan Type</label>
+                                    <select id="planType" class="form-select">
+                                        <option value="">Select Plan Type</option>
+                                        <option value="Commercial">Commercial</option>
+                                        <option value="Medicare">Medicare</option>
+                                        <option value="Medicaid">Medicaid</option>
+                                        <option value="Medicare Advantage">Medicare Advantage</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Context Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="lucide-file-text" style="font-size: 18px; margin-right: 8px;"></i>Clinical Context</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label" for="clinicalNotes">Clinical Notes & Justification</label>
+                                <textarea id="clinicalNotes" class="form-textarea" rows="5" placeholder="Provide detailed clinical context, patient history, social factors, lifestyle interventions tried, and medical justification for the requested treatment..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Real-time Analysis Sidebar -->
+                <div class="right-sidebar">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="lucide-brain" style="font-size: 18px; margin-right: 8px;"></i>Real-Time Analysis</h2>
+                        </div>
+                        <div class="card-body">
+                            <!-- Approval Likelihood -->
+                            <div class="approval-meter">
+                                <h4 style="margin-bottom: var(--space-2);">Approval Likelihood</h4>
+                                <div class="approval-percentage" id="approvalPercentage">--</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                                </div>
+                                <p class="text-muted" style="font-size: var(--text-sm); margin-top: var(--space-2);">
+                                    Based on current form data
+                                </p>
+                            </div>
+
+                            <!-- Requirements Checklist -->
+                            <div style="margin-top: var(--space-6);">
+                                <h4 style="margin-bottom: var(--space-3);">Requirements Checklist</h4>
+                                <ul class="checklist" id="requirementsChecklist">
+                                    <li class="checklist-item">
+                                        <i class="lucide-check-circle checklist-icon" id="check-demographics"></i>
+                                        <span>Patient Demographics</span>
+                                    </li>
+                                    <li class="checklist-item">
+                                        <i class="lucide-alert-circle checklist-icon warning" id="check-diagnosis"></i>
+                                        <span>Primary Diagnosis</span>
+                                    </li>
+                                    <li class="checklist-item">
+                                        <i class="lucide-x-circle checklist-icon error" id="check-hba1c"></i>
+                                        <span>HbA1c Level</span>
+                                    </li>
+                                    <li class="checklist-item">
+                                        <i class="lucide-x-circle checklist-icon error" id="check-medications"></i>
+                                        <span>Current Medications</span>
+                                    </li>
+                                    <li class="checklist-item">
+                                        <i class="lucide-x-circle checklist-icon error" id="check-insurance"></i>
+                                        <span>Insurance Information</span>
+                                    </li>
+                                    <li class="checklist-item">
+                                        <i class="lucide-x-circle checklist-icon error" id="check-requested"></i>
+                                        <span>Requested Medication</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- AI Suggestions -->
+                            <div id="aiSuggestions" style="margin-top: var(--space-6); display: none;">
+                                <h4 style="margin-bottom: var(--space-3);">
+                                    <i class="lucide-lightbulb" style="font-size: 16px; color: var(--warning-amber);"></i>
+                                    AI Recommendations
+                                </h4>
+                                <div id="suggestionsList" style="font-size: var(--text-sm); color: var(--text-secondary);">
+                                    <!-- Dynamically populated -->
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div style="margin-top: var(--space-8);">
+                                <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                                    <i class="lucide-send"></i>
+                                    Generate AI Analysis
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-full mt-2" id="saveBtn">
+                                    <i class="lucide-save"></i>
+                                    Save as Draft
+                                </button>
+                            </div>
+
+                            <!-- Quick Stats -->
+                            <div style="margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--border-color);">
+                                <div style="font-size: var(--text-xs); color: var(--text-secondary);">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-1);">
+                                        <span>Forms Completed Today</span>
+                                        <span style="font-weight: 600;">12</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>Average Approval Rate</span>
+                                        <span style="font-weight: 600; color: var(--accent-green);">78%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Results Section (Hidden by default) -->
+        <div id="results" style="display: none; margin-top: var(--space-8);">
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="lucide-bar-chart-2" style="font-size: 18px; margin-right: 8px;"></i>AI Analysis Results</h2>
+                </div>
+                <div class="card-body">
+                    <div id="analysisResults">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-6">
+                <div class="card-header">
+                    <h2><i class="lucide-file-text" style="font-size: 18px; margin-right: 8px;"></i>Generated Medical Necessity Letter</h2>
+                </div>
+                <div class="card-body">
+                    <div id="letterContent" style="font-family: 'Courier New', monospace; font-size: var(--text-sm); line-height: 1.6; white-space: pre-wrap; max-height: 600px; overflow-y: auto; background-color: var(--bg-main); padding: var(--space-4); border-radius: var(--rounded-md);">
+                        <!-- Dynamically populated -->
+                    </div>
+                    <div style="margin-top: var(--space-4); display: flex; gap: var(--space-3);">
+                        <button class="btn btn-primary" onclick="copyLetter()">
+                            <i class="lucide-copy"></i>
+                            Copy to Clipboard
+                        </button>
+                        <button class="btn btn-secondary" onclick="downloadLetter()">
+                            <i class="lucide-download"></i>
+                            Download as PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3001';
+        
+        // Real-time form validation and checklist updates
+        const formFields = {
+            demographics: ['patientName', 'patientAge', 'patientGender', 'patientBMI'],
+            diagnosis: ['primaryDiagnosis'],
+            hba1c: ['hba1c'],
+            medications: ['currentMedications'],
+            insurance: ['payer', 'planType'],
+            requested: ['requestedMedication']
+        };
+
+        // Update checklist in real-time
+        function updateChecklist() {
+            let completedCount = 0;
+            let totalCount = 0;
+
+            for (const [section, fields] of Object.entries(formFields)) {
+                const isComplete = fields.every(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    return field && field.value.trim() !== '';
+                });
+
+                const icon = document.getElementById(`check-${section}`);
+                if (icon) {
+                    icon.className = `lucide-${isComplete ? 'check-circle' : 'x-circle'} checklist-icon ${isComplete ? 'complete' : 'error'}`;
+                }
+
+                if (isComplete) completedCount++;
+                totalCount++;
+            }
+
+            // Update approval percentage
+            const percentage = Math.round((completedCount / totalCount) * 100);
+            updateApprovalMeter(percentage);
+        }
+
+        function updateApprovalMeter(percentage) {
+            const percentageEl = document.getElementById('approvalPercentage');
+            const progressFill = document.getElementById('progressFill');
+
+            percentageEl.textContent = `${percentage}%`;
+            progressFill.style.width = `${percentage}%`;
+
+            // Update colors based on percentage
+            if (percentage >= 70) {
+                percentageEl.className = 'approval-percentage high';
+                progressFill.className = 'progress-fill';
+            } else if (percentage >= 50) {
+                percentageEl.className = 'approval-percentage medium';
+                progressFill.className = 'progress-fill medium';
+            } else {
+                percentageEl.className = 'approval-percentage low';
+                progressFill.className = 'progress-fill low';
+            }
+        }
+
+        // Add event listeners to all form fields
+        document.addEventListener('DOMContentLoaded', () => {
+            const formInputs = document.querySelectorAll('input, select, textarea');
+            formInputs.forEach(input => {
+                input.addEventListener('input', updateChecklist);
+                input.addEventListener('change', updateChecklist);
+            });
+            
+            // Initial checklist update
+            updateChecklist();
+        });
+
+        // Handle form submission
+        document.getElementById('priorAuthForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const results = document.getElementById('results');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="lucide-loader" style="animation: spin 1s linear infinite;"></i> Analyzing with AI...';
+            
+            // Add spinning animation
+            const style = document.createElement('style');
+            style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+            document.head.appendChild(style);
+            
+            try {
+                const requestedMedication = document.getElementById('requestedMedication').value.trim();
+                if (!requestedMedication) {
+                    alert('Please specify the medication you are requesting authorization for.');
+                    return;
+                }
+                
+                const formData = {
+                    patientData: {
+                        name: document.getElementById('patientName').value || 'Patient',
+                        age: parseInt(document.getElementById('patientAge').value) || 0,
+                        gender: document.getElementById('patientGender').value,
+                        bmi: parseFloat(document.getElementById('patientBMI').value) || 0,
+                        weight: parseFloat(document.getElementById('weight').value) || 0
+                    },
+                    clinicalContext: {
+                        primaryDiagnosis: document.getElementById('primaryDiagnosis').value || 'Type 2 Diabetes Mellitus',
+                        hba1c: parseFloat(document.getElementById('hba1c').value) || 0,
+                        fastingGlucose: parseFloat(document.getElementById('fastingGlucose').value) || 0,
+                        comorbidities: document.getElementById('comorbidities').value.split(',').map(s => s.trim()).filter(s => s),
+                        currentMedications: document.getElementById('currentMedications').value,
+                        previousTreatments: document.getElementById('previousTreatments').value.split(',').map(s => s.trim()).filter(s => s),
+                        requestedMedication: requestedMedication,
+                        notes: document.getElementById('clinicalNotes').value
+                    },
+                    payerRequirements: {
+                        payer: document.getElementById('payer').value || 'Insurance Payer',
+                        planType: document.getElementById('planType').value
+                    }
+                };
+                
+                const response = await fetch(`${API_BASE}/analyze-prior-auth`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    displayResults(result);
+                    results.style.display = 'block';
+                    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    alert('Analysis failed: ' + (result.error || 'Unknown error'));
+                }
+                
+            } catch (error) {
+                alert('Error: Make sure the AI service is running on port 3001');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="lucide-send"></i> Generate AI Analysis';
+            }
+        });
+
+        function displayResults(result) {
+            const { prediction, documentation } = result;
+            
+            // Display analysis results
+            document.getElementById('analysisResults').innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6);">
+                    <div style="text-align: center; padding: var(--space-4); background-color: var(--bg-main); border-radius: var(--rounded-md);">
+                        <div style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-2);">Approval Probability</div>
+                        <div style="font-size: var(--text-3xl); font-weight: 700; color: ${prediction.probability >= 70 ? 'var(--accent-green)' : prediction.probability >= 50 ? 'var(--warning-amber)' : 'var(--error-red)'};">
+                            ${prediction.probability}%
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: var(--space-4); background-color: var(--bg-main); border-radius: var(--rounded-md);">
+                        <div style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-2);">Risk Level</div>
+                        <div style="font-size: var(--text-xl); font-weight: 600;">
+                            ${prediction.riskLevel}
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: var(--space-4); background-color: var(--bg-main); border-radius: var(--rounded-md);">
+                        <div style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-2);">AI Confidence</div>
+                        <div style="font-size: var(--text-xl); font-weight: 600;">
+                            ${prediction.confidence}%
+                        </div>
+                    </div>
+                </div>
+                
+                ${prediction.suggestions.length > 0 ? `
+                <div>
+                    <h4 style="margin-bottom: var(--space-3);">
+                        <i class="lucide-lightbulb" style="font-size: 16px; color: var(--warning-amber);"></i>
+                        Strategic Recommendations
+                    </h4>
+                    <ul style="list-style: none; padding: 0;">
+                        ${prediction.suggestions.map(s => `
+                            <li style="background-color: var(--bg-main); padding: var(--space-3); margin-bottom: var(--space-2); border-radius: var(--rounded-md); border-left: 3px solid var(--primary-blue);">
+                                ${s}
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>` : ''}
+            `;
+            
+            // Display letter content
+            document.getElementById('letterContent').textContent = documentation.documentation;
+        }
+
+        // Copy letter to clipboard
+        function copyLetter() {
+            const letterContent = document.getElementById('letterContent').textContent;
+            navigator.clipboard.writeText(letterContent).then(() => {
+                alert('Letter copied to clipboard!');
+            });
+        }
+
+        // Download letter as PDF (placeholder)
+        function downloadLetter() {
+            alert('PDF download functionality would be implemented here.');
+        }
+
+        // Save draft functionality
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            const formData = new FormData(document.getElementById('priorAuthForm'));
+            const data = Object.fromEntries(formData);
+            localStorage.setItem('priorAuthDraft', JSON.stringify(data));
+            alert('Draft saved successfully!');
+        });
+
+        // Load draft on page load
+        window.addEventListener('load', () => {
+            const draft = localStorage.getItem('priorAuthDraft');
+            if (draft) {
+                const data = JSON.parse(draft);
+                Object.entries(data).forEach(([key, value]) => {
+                    const field = document.getElementById(key);
+                    if (field) field.value = value;
+                });
+                updateChecklist();
+            }
+        });
+    </script>
+</body>
+</html> 

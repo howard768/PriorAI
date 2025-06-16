@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLP-1 RCM Intelligence Platform - Prior Authorization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-flex;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 160px;
+            background-color: #1f2937;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 6px 8px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -80px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1f2937 transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Interactive checklist item hover */
+        .checklist-interactive:hover {
+            background-color: #f9fafb;
+            border-radius: 0.375rem;
+            margin-left: -0.5rem;
+            margin-right: -0.5rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            cursor: pointer;
+        }
+        
+        /* Success animation */
+        @keyframes successPulse {
+            0% { transform: scale(0.9); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .success-animation {
+            animation: successPulse 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Main Form View -->
+    <div id="mainView">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                        <div>
+                            <h1 class="text-xl font-semibold text-gray-900">GLP-1 RCM Intelligence Platform</h1>
+                            <p class="text-sm text-gray-500">AI-Powered Prior Authorization</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="relative p-2 text-gray-400 hover:text-gray-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                            </svg>
+                            <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
+                        </button>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-medium">
+                                DC
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Dr. Carter</p>
+                                <p class="text-xs text-gray-500">Endocrinology</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column: Data Entry Form -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Patient Demographics Card -->
+                    <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-lg font-medium text-gray-900 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                                Patient Demographics
+                            </h2>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                        Patient Name
+                                        <span class="tooltip ml-1">
+                                            <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                            </svg>
+                                            <span class="tooltiptext">Auto-populated from EHR</span>
+                                        </span>
+                                    </label>
+                                    <input type="text" id="patientName" value="Margaret Thompson" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                        Age
+                                        <span class="tooltip ml-1">
+                                            <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                            </svg>
+                                            <span class="tooltiptext">Auto-populated from EHR</span>
+                                        </span>
+                                    </label>
+                                    <input type="number" value="52" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                        Gender
+                                        <span class="tooltip ml-1">
+                                            <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                            </svg>
+                                            <span class="tooltiptext">Auto-populated from EHR</span>
+                                        </span>
+                                    </label>
+                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        <option selected>Female</option>
+                                        <option>Male</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                        BMI
+                                        <span class="tooltip ml-1">
+                                            <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                            </svg>
+                                            <span class="tooltiptext">Auto-populated from EHR</span>
+                                        </span>
+                                    </label>
+                                    <input type="number" value="31.2" step="0.1" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Information Card -->
+                    <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-lg font-medium text-gray-900 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                                </svg>
+                                Clinical Information
+                            </h2>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Primary Diagnosis</label>
+                                <input type="text" id="primaryDiagnosis" placeholder="e.g., Type 2 Diabetes Mellitus" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">HbA1c (%)</label>
+                                    <input type="number" id="hba1c" step="0.1" placeholder="e.g., 8.5" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                        Fasting Glucose (mg/dL)
+                                        <span class="tooltip ml-1">
+                                            <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                            </svg>
+                                            <span class="tooltiptext">Auto-populated from EHR</span>
+                                        </span>
+                                    </label>
+                                    <input type="number" value="156" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+                                        Current Weight (lbs)
+                                        <span class="tooltip ml-1">
+                                            <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                            </svg>
+                                            <span class="tooltiptext">Auto-populated from EHR</span>
+                                        </span>
+                                    </label>
+                                    <input type="number" value="178" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Comorbidities</label>
+                                <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm" placeholder="List relevant comorbidities...">Hypertension, Hyperlipidemia, NAFLD</textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Notes for Reviewer</label>
+                                <textarea id="reviewerNotes" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm" placeholder="Additional context for insurance reviewer..."></textarea>
+                                <button id="generateSummaryBtn" disabled class="mt-2 inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                    </svg>
+                                    Generate AI Summary
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: AI Pre-Submission Assistant -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg border border-gray-200 shadow-sm sticky top-24">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-lg font-medium text-gray-900 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                                AI Pre-Submission Assistant
+                            </h2>
+                        </div>
+                        <div class="p-6 space-y-6">
+                            <!-- Submission Confidence Score -->
+                            <div>
+                                <div class="flex justify-between items-baseline mb-2">
+                                    <h3 class="text-sm font-medium text-gray-700">Submission Confidence</h3>
+                                    <span id="confidenceScore" class="text-2xl font-bold text-red-600">17%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div id="confidenceBar" class="bg-red-500 h-2.5 rounded-full transition-all duration-300" style="width: 17%"></div>
+                                </div>
+                                <p id="confidenceText" class="mt-2 text-sm text-gray-500 italic">Confidence is low. Please provide the latest HbA1c value and specify a primary diagnosis.</p>
+                            </div>
+
+                            <!-- Requirements Checklist -->
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-700 mb-3">Requirements Checklist</h3>
+                                <ul class="space-y-3">
+                                    <!-- Patient Demographics - Complete -->
+                                    <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span class="text-sm text-gray-700">Patient Demographics</span>
+                                    </li>
+
+                                    <!-- Primary Diagnosis - Incomplete -->
+                                    <li id="checkDiagnosis" class="checklist-interactive" onclick="scrollToField('primaryDiagnosis')">
+                                        <div class="flex items-start">
+                                            <svg id="iconDiagnosis" class="w-5 h-5 text-yellow-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                            </svg>
+                                            <span id="textDiagnosis" class="text-sm font-semibold text-gray-700">Primary Diagnosis</span>
+                                        </div>
+                                        <p id="tipDiagnosis" class="ml-7 text-xs text-gray-500 mt-1">Please specify the primary diagnosis for this authorization.</p>
+                                    </li>
+
+                                    <!-- HbA1c Level - Incomplete -->
+                                    <li id="checkHba1c" class="checklist-interactive" onclick="scrollToField('hba1c')">
+                                        <div class="flex items-start">
+                                            <svg id="iconHba1c" class="w-5 h-5 text-yellow-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                            </svg>
+                                            <span id="textHba1c" class="text-sm font-semibold text-gray-700">HbA1c Level</span>
+                                        </div>
+                                        <p id="tipHba1c" class="ml-7 text-xs text-gray-500 mt-1">Payer requires a value from the last 90 days.</p>
+                                    </li>
+
+                                    <!-- Current Medications - Complete -->
+                                    <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span class="text-sm text-gray-700">Current Medications (from EHR)</span>
+                                    </li>
+
+                                    <!-- Insurance Information - Complete -->
+                                    <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span class="text-sm text-gray-700">Insurance Information (from EHR)</span>
+                                    </li>
+
+                                    <!-- Requested Medication - Complete -->
+                                    <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span class="text-sm text-gray-700">Requested Medication</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="space-y-3">
+                                <button id="submitBtn" disabled class="w-full bg-blue-600 text-white px-4 py-2 rounded-md font-medium opacity-50 cursor-not-allowed transition-all duration-200">
+                                    Submit for Authorization
+                                </button>
+                                <button class="w-full text-blue-600 hover:text-blue-700 text-sm font-medium">
+                                    Save as Draft
+                                </button>
+                            </div>
+
+                            <!-- Summary Metrics -->
+                            <div class="pt-6 border-t border-gray-200 space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Forms Completed Today</span>
+                                    <span class="font-medium text-gray-700">12</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Average Approval Rate</span>
+                                    <span class="font-medium text-green-600">78%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Success Confirmation View (Initially Hidden) -->
+    <div id="successView" class="hidden min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div class="bg-white rounded-lg border border-gray-200 shadow-lg max-w-md w-full p-8 text-center success-animation">
+            <!-- Success Icon -->
+            <div class="mx-auto flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6">
+                <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            
+            <!-- Success Message -->
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Submission Successful</h2>
+            <p class="text-gray-600 mb-2">
+                The prior authorization request for <span class="font-semibold">Margaret Thompson</span> has been successfully submitted to the payer.
+            </p>
+            <p class="text-gray-900 font-mono text-lg mb-8">
+                Tracking ID: <span class="font-bold">PA-8C4F2B-2025</span>
+            </p>
+            
+            <!-- Action Buttons -->
+            <div class="space-y-3">
+                <button onclick="resetForm()" class="w-full bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors">
+                    Start New Authorization
+                </button>
+                <button class="w-full text-blue-600 hover:text-blue-700 text-sm font-medium">
+                    Return to Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Track form completion state
+        let formState = {
+            primaryDiagnosis: false,
+            hba1c: false
+        };
+
+        // Function to scroll to a specific field
+        function scrollToField(fieldId) {
+            const element = document.getElementById(fieldId);
+            if (element) {
+                const yOffset = -100; // Offset for sticky header
+                const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+                element.focus();
+                
+                // Add a subtle highlight effect
+                element.classList.add('ring-2', 'ring-blue-500', 'ring-offset-2');
+                setTimeout(() => {
+                    element.classList.remove('ring-2', 'ring-blue-500', 'ring-offset-2');
+                }, 2000);
+            }
+        }
+
+        // Update checklist item status
+        function updateChecklistItem(itemId, isComplete) {
+            const icon = document.getElementById(`icon${itemId}`);
+            const text = document.getElementById(`text${itemId}`);
+            const tip = document.getElementById(`tip${itemId}`);
+            const checkItem = document.getElementById(`check${itemId}`);
+            
+            if (isComplete) {
+                // Update to complete state
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+                icon.classList.remove('text-yellow-500');
+                icon.classList.add('text-green-500');
+                text.classList.remove('font-semibold');
+                if (tip) tip.classList.add('hidden');
+                checkItem.classList.remove('checklist-interactive');
+                checkItem.onclick = null;
+            } else {
+                // Keep incomplete state
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>';
+                icon.classList.remove('text-green-500');
+                icon.classList.add('text-yellow-500');
+                text.classList.add('font-semibold');
+                if (tip) tip.classList.remove('hidden');
+            }
+        }
+
+        // Update confidence score and button state
+        function updateConfidence() {
+            const allComplete = formState.primaryDiagnosis && formState.hba1c;
+            const confidenceScore = document.getElementById('confidenceScore');
+            const confidenceBar = document.getElementById('confidenceBar');
+            const confidenceText = document.getElementById('confidenceText');
+            const submitBtn = document.getElementById('submitBtn');
+            const generateBtn = document.getElementById('generateSummaryBtn');
+            
+            if (allComplete) {
+                // All requirements met
+                confidenceScore.textContent = '95%';
+                confidenceScore.classList.remove('text-red-600', 'text-yellow-500');
+                confidenceScore.classList.add('text-green-600');
+                confidenceBar.style.width = '95%';
+                confidenceBar.classList.remove('bg-red-500', 'bg-yellow-500');
+                confidenceBar.classList.add('bg-green-500');
+                confidenceText.textContent = 'All requirements met. Ready for submission.';
+                
+                // Enable buttons
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                submitBtn.classList.add('hover:bg-blue-700');
+                
+                generateBtn.disabled = false;
+                generateBtn.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
+            } else if (formState.primaryDiagnosis || formState.hba1c) {
+                // Partial completion
+                confidenceScore.textContent = '65%';
+                confidenceScore.classList.remove('text-red-600', 'text-green-600');
+                confidenceScore.classList.add('text-yellow-500');
+                confidenceBar.style.width = '65%';
+                confidenceBar.classList.remove('bg-red-500', 'bg-green-500');
+                confidenceBar.classList.add('bg-yellow-500');
+                confidenceText.textContent = 'Getting closer. Please complete all required fields.';
+            } else {
+                // Initial state
+                confidenceScore.textContent = '17%';
+                confidenceScore.classList.remove('text-green-600', 'text-yellow-500');
+                confidenceScore.classList.add('text-red-600');
+                confidenceBar.style.width = '17%';
+                confidenceBar.classList.remove('bg-green-500', 'bg-yellow-500');
+                confidenceBar.classList.add('bg-red-500');
+                confidenceText.textContent = 'Confidence is low. Please provide the latest HbA1c value and specify a primary diagnosis.';
+            }
+        }
+
+        // Monitor form inputs
+        document.getElementById('primaryDiagnosis').addEventListener('input', function(e) {
+            formState.primaryDiagnosis = e.target.value.trim().length > 0;
+            updateChecklistItem('Diagnosis', formState.primaryDiagnosis);
+            updateConfidence();
+        });
+
+        document.getElementById('hba1c').addEventListener('input', function(e) {
+            formState.hba1c = e.target.value.trim().length > 0 && parseFloat(e.target.value) > 0;
+            updateChecklistItem('Hba1c', formState.hba1c);
+            updateConfidence();
+        });
+
+        // Generate AI Summary
+        document.getElementById('generateSummaryBtn').addEventListener('click', function() {
+            const patientName = document.getElementById('patientName').value;
+            const diagnosis = document.getElementById('primaryDiagnosis').value;
+            const hba1c = document.getElementById('hba1c').value;
+            const reviewerNotes = document.getElementById('reviewerNotes');
+            
+            const summary = `Prior authorization request for ${patientName} (Age 52, BMI 31.2) for [MEDICATION NAME]. The patient has a primary diagnosis of ${diagnosis} with a recent HbA1c of ${hba1c}% and fasting glucose of 156 mg/dL. Patient presents with comorbidities including Hypertension, Hyperlipidemia, and NAFLD. Current medications have been documented in the attached clinical records. Please see attached clinical documentation for comprehensive review.`;
+            
+            reviewerNotes.value = summary;
+            
+            // Add a subtle animation
+            reviewerNotes.classList.add('ring-2', 'ring-blue-500', 'ring-offset-2');
+            setTimeout(() => {
+                reviewerNotes.classList.remove('ring-2', 'ring-blue-500', 'ring-offset-2');
+            }, 2000);
+        });
+
+        // Submit button handler
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            // Hide main view and show success view
+            document.getElementById('mainView').classList.add('hidden');
+            document.getElementById('successView').classList.remove('hidden');
+        });
+
+        // Reset form function
+        function resetForm() {
+            // Reset to main view
+            document.getElementById('successView').classList.add('hidden');
+            document.getElementById('mainView').classList.remove('hidden');
+            
+            // Clear form fields
+            document.getElementById('primaryDiagnosis').value = '';
+            document.getElementById('hba1c').value = '';
+            document.getElementById('reviewerNotes').value = '';
+            
+            // Reset form state
+            formState.primaryDiagnosis = false;
+            formState.hba1c = false;
+            
+            // Update checklist and confidence
+            updateChecklistItem('Diagnosis', false);
+            updateChecklistItem('Hba1c', false);
+            updateConfidence();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html> 
