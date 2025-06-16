@@ -217,7 +217,7 @@ function App() {
   const [showDemoNotice, setShowDemoNotice] = useState(true);
 
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
         <header className="bg-white border-b border-gray-200 shadow-sm">
