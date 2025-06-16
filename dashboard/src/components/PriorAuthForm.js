@@ -1158,26 +1158,34 @@ const PriorAuthForm = () => {
                 </div>
               </div>
 
-              {/* AI Assistant */}
-              <div className="bg-indigo-50 rounded-lg p-4 mb-6">
-                <h3 className="text-sm font-medium text-indigo-900 mb-2">AI Pre-Submission Assistant</h3>
-                <p className="text-xs text-indigo-700 mb-3">
-                  Our AI analyzes your submission in real-time to maximize approval chances.
+              {/* Pre-Submission Assistant */}
+              <div className="bg-indigo-50 border border-indigo-200 rounded-md p-4 mb-6">
+                <h4 className="text-base font-semibold text-indigo-900 mb-2">Pre-Submission Assistant</h4>
+                <p className="text-sm text-indigo-800 mb-2">
+                  The system checks your submission in real-time for payer-specific requirements and documentation completeness.
                 </p>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-xs">
-                    <CheckCircle className="h-4 w-4 text-indigo-600" />
-                    <span className="text-indigo-800">Payer-specific requirements check</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs">
-                    <CheckCircle className="h-4 w-4 text-indigo-600" />
-                    <span className="text-indigo-800">Medical necessity validation</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs">
-                    <CheckCircle className="h-4 w-4 text-indigo-600" />
-                    <span className="text-indigo-800">Documentation completeness</span>
-                  </div>
-                </div>
+                <ul className="text-sm text-indigo-800 space-y-1">
+                  <li>• Payer-specific requirements review</li>
+                  <li>• Medical necessity compliance</li>
+                  <li>• Documentation completeness</li>
+                </ul>
+              </div>
+
+              {/* Automated Letter Generation */}
+              <div className="bg-purple-50 border border-purple-200 rounded-md p-4">
+                <h4 className="text-base font-semibold text-purple-900 mb-2">Automated Letter Generation</h4>
+                <p className="text-sm text-purple-800 mb-2">
+                  Complete the form to generate a compliant, personalized letter of medical necessity.
+                </p>
+                <button
+                  disabled
+                  className="w-full px-3 py-2 bg-purple-100 text-purple-400 text-sm rounded-md cursor-not-allowed"
+                >
+                  Generate Letter of Medical Necessity
+                </button>
+                <p className="text-xs text-purple-600 mt-2 text-center">
+                  Complete form to enable
+                </p>
               </div>
 
               {/* Letter Generation */}
@@ -1203,28 +1211,6 @@ const PriorAuthForm = () => {
                       Copy to Clipboard
                     </button>
                   </div>
-                </div>
-              )}
-
-              {/* Feature Highlight */}
-              {!generatedLetter && (
-                <div className="bg-purple-50 rounded-lg p-4">
-                  <h3 className="text-sm font-medium text-purple-900 mb-2 flex items-center gap-2">
-                    <Zap className="h-4 w-4" />
-                    AI Letter Generation
-                  </h3>
-                  <p className="text-xs text-purple-700 mb-3">
-                    Complete the form to generate a personalized letter of medical necessity using AI.
-                  </p>
-                  <button
-                    disabled
-                    className="w-full px-3 py-2 bg-purple-100 text-purple-400 text-sm rounded-md cursor-not-allowed"
-                  >
-                    Generate Letter of Medical Necessity
-                  </button>
-                  <p className="text-xs text-purple-600 mt-2 text-center">
-                    Complete form to enable
-                  </p>
                 </div>
               )}
             </div>
