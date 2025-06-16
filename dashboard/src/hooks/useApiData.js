@@ -18,6 +18,10 @@ export const useApiData = () => {
   });
 
   const fetchPolicies = useCallback(async () => {
+    if (config.USE_MOCK_DATA) {
+      const result = await mockDataService.getPolicies();
+      return result.data;
+    }
     try {
       const response = await axios.get(`${API_BASE}/api/policies?limit=100`);
       return response.data;
@@ -28,6 +32,10 @@ export const useApiData = () => {
   }, []);
 
   const fetchAnalytics = useCallback(async () => {
+    if (config.USE_MOCK_DATA) {
+      const result = await mockDataService.getAnalytics();
+      return result.data;
+    }
     try {
       const response = await axios.get(`${API_BASE}/api/analytics/data-moat`);
       return response.data;
@@ -40,12 +48,10 @@ export const useApiData = () => {
   const fetchAllData = useCallback(async () => {
     try {
       setData(prev => ({ ...prev, loading: true, error: null }));
-      
       const [policiesData, analyticsData] = await Promise.all([
         fetchPolicies(),
         fetchAnalytics()
       ]);
-
       setData({
         policies: policiesData.policies || [],
         metadata: policiesData.metadata || {},
@@ -64,6 +70,10 @@ export const useApiData = () => {
   }, [fetchPolicies, fetchAnalytics]);
 
   const triggerScraping = useCallback(async (sources = ['medicare', 'commercial']) => {
+    if (config.USE_MOCK_DATA) {
+      // No-op or mock response in demo mode
+      return { success: true, message: 'Demo mode: scraping not available.' };
+    }
     try {
       const response = await axios.post(`${API_BASE}/api/scrape/policies`, {
         sources,
